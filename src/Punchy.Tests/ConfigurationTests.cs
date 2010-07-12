@@ -26,7 +26,7 @@ namespace Punchy.Tests
         [TestMethod]
         public void Configuration_output_directory_is_physical()
         {
-            Assert.AreEqual(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"static\cache"), config.OutputFolder);
+            Assert.AreEqual(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"static\cache"), config.OutputPhysicalPath);
         }
 
         [TestMethod]

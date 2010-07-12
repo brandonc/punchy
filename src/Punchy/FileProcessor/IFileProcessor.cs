@@ -8,6 +8,6 @@ namespace Punchy.FileProcessor
 {
     public interface IFileProcessor
     {
-        ICollection<FileInfo> Process(ICollection<FileInfo> fileset, string tempfolder);
+        void Process(ICollection<FileInfo> workspace);
     }
 }

@@ -11,5 +11,6 @@ namespace Punchy
         string Filename { get; }
         ICollection<IFile> FileList { get; }
         string MimeType { get; }
+        long Revision { get; set; }
     }
 }

@@ -46,6 +46,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigurationTests.cs" />
   </ItemGroup>
@@ -53,6 +54,18 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Punchy.Plugin.DotLessCss\Punchy.Plugin.DotLessCss.csproj">
+      <Project>{21B6D0DB-FFD1-401D-BC12-5FB39038851D}</Project>
+      <Name>Punchy.Plugin.DotLessCss</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Punchy.Plugin.MicrosoftAjaxMinifier\Punchy.Plugin.MicrosoftAjaxMinifier.csproj">
+      <Project>{30D8826E-ECDD-483B-A98A-2E2EE78DF6E9}</Project>
+      <Name>Punchy.Plugin.MicrosoftAjaxMinifier</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Punchy.Plugin.YahooYuiCompressor\Punchy.Plugin.YahooYuiCompressor.csproj">
+      <Project>{11266234-0347-4543-B7AE-23DEA3629B9E}</Project>
+      <Name>Punchy.Plugin.YahooYuiCompressor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Punchy\Punchy.csproj">
       <Project>{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}</Project>
       <Name>Punchy</Name>

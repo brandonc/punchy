@@ -86,5 +86,7 @@ namespace Punchy.Configuration
         {
             get { return this.OutFile; }
         }
+
+        public long Revision { get; set; }
     }
 }

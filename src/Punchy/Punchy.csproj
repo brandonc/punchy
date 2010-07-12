@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -43,20 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CacheProvider\ICacheProvider.cs" />
+    <Compile Include="BundleException.cs" />
     <Compile Include="Configuration\FileElement.cs" />
     <Compile Include="Configuration\FileElementCollection.cs" />
     <Compile Include="Configuration\BundleElement.cs" />
     <Compile Include="Configuration\BundleElementCollection.cs" />
     <Compile Include="Configuration\PathMapper.cs" />
     <Compile Include="Configuration\PunchyConfigurationSection.cs" />
+    <Compile Include="Extension\HtmlHelperExtensions.cs" />
+    <Compile Include="Extension\StringExtensions.cs" />
+    <Compile Include="Extension\UrlHelperExtensions.cs" />
     <Compile Include="FileProcessor\CombinerFileProcessor.cs" />
     <Compile Include="FileProcessor\IFileProcessor.cs" />
-    <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="IFile.cs" />
     <Compile Include="IBundle.cs" />
     <Compile Include="InvalidPunchyConfigurationException.cs" />
     <Compile Include="Processor.cs" />
+    <Compile Include="ProcessorWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProviderSetting.cs" />
   </ItemGroup>

@@ -9,12 +9,20 @@ namespace Punchy.Configuration
 {
     public class PunchyConfigurationSection : ConfigurationSection
     {
-        [ConfigurationProperty("outputfolder", DefaultValue = "~/static/cache", IsRequired = false)]
-        public string OutputFolder
+        [ConfigurationProperty("outputpath", DefaultValue = "~/static/cache", IsRequired = false)]
+        public string OutputPath
         {
             get
             {
-                return PathMapper.MapPath((string)this["outputfolder"]);
+                return (string)this["outputpath"];
+            }
+        }
+
+        public string OutputPhysicalPath
+        {
+            get
+            {
+                return PathMapper.MapPath((string)this["outputpath"]);
             }
         }
 
