@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punchy", "Punchy\Punchy.csproj", "{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punchy.Plugin.MicrosoftAjaxMinifier", "Punchy.Plugin.MicrosoftAjaxMinifier\Punchy.Plugin.MicrosoftAjaxMinifier.csproj", "{30D8826E-ECDD-483B-A98A-2E2EE78DF6E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punchy.Plugin.YahooYuiCompressor", "Punchy.Plugin.YahooYuiCompressor\Punchy.Plugin.YahooYuiCompressor.csproj", "{11266234-0347-4543-B7AE-23DEA3629B9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{134FCB06-1E80-4995-B7D9-7E659A453545}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punchy.Plugin.DotLessCss", "Punchy.Plugin.DotLessCss\Punchy.Plugin.DotLessCss.csproj", "{21B6D0DB-FFD1-401D-BC12-5FB39038851D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5321661B-C5E6-44E1-A626-820A783794A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punchy.Tests", "Punchy.Tests\Punchy.Tests.csproj", "{6833EEAB-BD43-4835-B5F2-738E8C69E1FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{16C2C4E3-709D-4928-81D1-E9E3B0CF37BA}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Punchy.vsmdi = Punchy.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Punchy.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30D8826E-ECDD-483B-A98A-2E2EE78DF6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30D8826E-ECDD-483B-A98A-2E2EE78DF6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30D8826E-ECDD-483B-A98A-2E2EE78DF6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30D8826E-ECDD-483B-A98A-2E2EE78DF6E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11266234-0347-4543-B7AE-23DEA3629B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11266234-0347-4543-B7AE-23DEA3629B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11266234-0347-4543-B7AE-23DEA3629B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11266234-0347-4543-B7AE-23DEA3629B9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B6D0DB-FFD1-401D-BC12-5FB39038851D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B6D0DB-FFD1-401D-BC12-5FB39038851D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B6D0DB-FFD1-401D-BC12-5FB39038851D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B6D0DB-FFD1-401D-BC12-5FB39038851D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6833EEAB-BD43-4835-B5F2-738E8C69E1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6833EEAB-BD43-4835-B5F2-738E8C69E1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6833EEAB-BD43-4835-B5F2-738E8C69E1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6833EEAB-BD43-4835-B5F2-738E8C69E1FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{30D8826E-ECDD-483B-A98A-2E2EE78DF6E9} = {134FCB06-1E80-4995-B7D9-7E659A453545}
+		{11266234-0347-4543-B7AE-23DEA3629B9E} = {134FCB06-1E80-4995-B7D9-7E659A453545}
+		{21B6D0DB-FFD1-401D-BC12-5FB39038851D} = {134FCB06-1E80-4995-B7D9-7E659A453545}
+		{6833EEAB-BD43-4835-B5F2-738E8C69E1FB} = {5321661B-C5E6-44E1-A626-820A783794A1}
+		{16C2C4E3-709D-4928-81D1-E9E3B0CF37BA} = {5321661B-C5E6-44E1-A626-820A783794A1}
+	EndGlobalSection
+EndGlobal
