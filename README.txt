@@ -1,11 +1,17 @@
 Overview
 ========
 
-Punchy is based on Pithy. At runtime it minifies and combines javascript and css files
-into pre-configured bundles. It uses a plugin system so that minification engines can
-be exchanged. Microsoft Ajax Minifier and Yahoo! YUI Compressor are included.
+At runtime Punchy minifies and combines javascript and css files into pre-configured bundles
+for use by your web application.
+
+Punchy is based on Pithy. Pithy does something very similar but uses a .NET port
+of YUI Compressor. Punchy allows you to change compressors and includes YUI Compressor
+for .NET and Microsoft Ajax Minifier.
 
 Punchy requires that a folder within your web application be writable by the application.
+
+Punchy uses file modification times to figure out if source files need to be re-minified.
+Re-minified files are given cache-busting querystring parameters.
 
 Change History
 ==============
