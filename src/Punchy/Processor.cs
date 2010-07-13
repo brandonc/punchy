@@ -31,7 +31,7 @@ namespace Punchy
 
             IBundle bundle = null;
             if(!this.bundles.TryGetValue(bundlefilename, out bundle))
-                throw new BundleException(bundlefilename);
+                throw BundleException.FromFilename(bundlefilename);
 
             if (CacheRevisionOutdated(bundle))
             {
@@ -116,20 +116,27 @@ namespace Punchy
         private void ProcessAndSaveBundle(IBundle bundle)
         {
             // Copy each source file to temp location and ensure it exists.
-            List<FileInfo> info = new List<FileInfo>(bundle.FileList.Count);
+            List<WorkfileContext> info = new List<WorkfileContext>(bundle.FileList.Count);
             foreach (IFile file in bundle.FileList)
             {
                 FileInfo fi = new FileInfo(file.PhysicalPath);
                 if (!fi.Exists)
-                    throw new BundleException(file.PhysicalPath);
+                    throw BundleException.FromFilename(file.PhysicalPath);
 
-                info.Add(CopyToTempFile(fi));
+                info.Add(new WorkfileContext() {
+                    Workfile = CopyToTempFile(fi),
+                    OriginalSource = fi
+                });
             }
 
             // Run each processor
             foreach (ITool proc in SelectToolchain(bundle))
             {
-                proc.Process(info);
+                proc.Process(new ToolContext()
+                {
+                    OutputFile = new FileInfo(Path.Combine(this.outputPath, bundle.Filename)),
+                    Workfiles = info,
+                });
             }
 
             bundle.Revision = DateTime.Now.Ticks;
@@ -181,7 +188,7 @@ namespace Punchy
 
             // Populate toolchains
             this.toolchains = new Dictionary<string, List<ITool>>(config.Toolchains.Count);
-            foreach (ToolchainElementCollection toolchain in config.Toolchains)
+            foreach (ToolchainElement toolchain in config.Toolchains)
             {
                 string key = toolchain.ForMimeType;
                 if (String.IsNullOrWhiteSpace(key))
@@ -193,7 +200,7 @@ namespace Punchy
                 }
 
                 List<ITool> toolchainList = new List<ITool>(toolchain.Count);
-                foreach (ToolchainElement toolconfig in toolchain)
+                foreach (ToolElement toolconfig in toolchain)
                 {
                     try
                     {
@@ -207,6 +214,10 @@ namespace Punchy
                     catch (InvalidCastException ex)
                     {
                         throw new InvalidPunchyConfigurationException("Tool \"" + toolconfig.Type + "\" must implement the Punchy.Tool.ITool interface.", ex);
+                    }
+                    catch (TypeLoadException ex)
+                    {
+                        throw new InvalidPunchyConfigurationException("Tool \"" + toolconfig.Type + "\" could not be loaded. Ensure that the assembly it belongs to is in the assembly probing path.", ex);
                     }
                 }
 

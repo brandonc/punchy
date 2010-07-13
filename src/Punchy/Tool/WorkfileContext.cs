@@ -6,8 +6,9 @@ using System.IO;
 
 namespace Punchy.Tool
 {
-    public interface ITool
+    public class WorkfileContext
     {
-        void Process(ToolContext context);
+        public FileInfo Workfile { get; set;  }
+        public FileInfo OriginalSource { get; set; }
     }
 }

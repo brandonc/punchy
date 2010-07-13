@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Punchy
 {
+    [Serializable]
     public class InvalidPunchyConfigurationException : ApplicationException
     {
         public InvalidPunchyConfigurationException()

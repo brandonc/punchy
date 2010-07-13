@@ -37,7 +37,7 @@ namespace Punchy.Configuration
         }
 
         [ConfigurationProperty("toolchains", IsRequired = true)]
-        [ConfigurationCollection(typeof(ToolchainElementCollection))]
+        [ConfigurationCollection(typeof(ToolchainElement), AddItemName = "toolchain", ClearItemsName = "cleartoolchains", RemoveItemName = "removetoolchain")]
         public ToolchainElementCollection Toolchains
         {
             get

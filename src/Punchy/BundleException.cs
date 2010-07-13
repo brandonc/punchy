@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Punchy
 {
+    [Serializable]
     public class BundleException : ApplicationException
     {
         public static BundleException FromFilename(string filename)

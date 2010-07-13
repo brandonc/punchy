@@ -1,24 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
-using System.Configuration;
 
 namespace Punchy.Configuration
 {
-    public class ToolchainElement : ConfigurationElement
+    public class ToolchainElement : ConfigurationElementCollection
     {
-        [ConfigurationProperty("type", IsRequired = true, IsKey = true)]
-        public string Type
+        [ConfigurationProperty("mimetype", IsRequired = false)]
+        public string ForMimeType
         {
             get
             {
-                return (string)this["type"];
+                return (string)this["mimetype"];
             }
-            set
+        }
+
+        [ConfigurationProperty("name", IsKey = true, IsRequired = true)]
+        public string Name
+        {
+            get
             {
-                this["type"] = value;
+                return (string)this["name"];
             }
+        }
+
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new ToolElement();
+        }
+
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((ToolElement)element).Type;
         }
     }
 }

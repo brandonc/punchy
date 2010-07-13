@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 
 namespace Punchy.Configuration
 {
     public class ToolchainElementCollection : ConfigurationElementCollection
     {
-        [ConfigurationProperty("for")]
-        public string ForMimeType
-        {
-            get
-            {
-                return (string)this["for"];
-            }
-        }
-
         protected override ConfigurationElement CreateNewElement()
         {
             return new ToolchainElement();
@@ -24,7 +15,7 @@ namespace Punchy.Configuration
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((ToolchainElement)element).Type;
+            return ((ToolchainElement)element).Name;
         }
     }
 }
