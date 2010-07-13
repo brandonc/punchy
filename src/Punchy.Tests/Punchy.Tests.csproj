@@ -58,6 +58,10 @@
       <Project>{21B6D0DB-FFD1-401D-BC12-5FB39038851D}</Project>
       <Name>Punchy.Plugin.DotLessCss</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Punchy.Plugin.GoogleClosure\Punchy.Plugin.GoogleClosure.csproj">
+      <Project>{C1DFA42F-4F68-4D27-B64F-72D3FE7D022F}</Project>
+      <Name>Punchy.Plugin.GoogleClosure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Punchy.Plugin.MicrosoftAjaxMinifier\Punchy.Plugin.MicrosoftAjaxMinifier.csproj">
       <Project>{30D8826E-ECDD-483B-A98A-2E2EE78DF6E9}</Project>
       <Name>Punchy.Plugin.MicrosoftAjaxMinifier</Name>

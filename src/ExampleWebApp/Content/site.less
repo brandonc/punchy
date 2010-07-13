@@ -1,12 +1,15 @@
-﻿.rounded_corners(@radius: 5px) {
+﻿@import "import.less";
+
+.rounded_corners(@radius: 5px) {
   -moz-border-radius: @radius;
   -webkit-border-radius: @radius;
   border-radius: @radius;
 }
 
-@nice-blue: #5B83AD;
-@light-blue: @nice-blue + #111;
-
 #header {
-  color: @light-blue;
+  .rounded_corners;
+}
+
+#footer {
+  .rounded_corners(10px);
 }

@@ -11,31 +11,30 @@ namespace Punchy.Plugin.DotLessCss
 {
     public class LessCssProcessor : ITool
     {
-        public void Process(ICollection<FileInfo> workspace)
+        public void Process(ToolContext context)
         {
-            for(int index = 0; index < workspace.Count; index++)
+            foreach (WorkfileContext workContext in context.Workfiles)
             {
-                FileInfo fi = workspace.Skip(index).Take(1).SingleOrDefault();
+                Directory.SetCurrentDirectory(workContext.OriginalSource.DirectoryName);
 
-                if (Path.GetExtension(fi.Name).ToLower() == ".less")
+                if (Path.GetExtension(workContext.Workfile.Name).ToLower() == ".less")
                 {
                     string compressed = null;
-                    using (var stream = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
+                    using (var reader = new StreamReader(workContext.Workfile.FullName, true))
                     {
-                        using (var reader = new StreamReader(stream))
+                        var engine = new EngineFactory(new DotlessConfiguration()
                         {
-                            compressed = Less.Parse(reader.ReadToEnd(), new DotlessConfiguration()
-                            {
-                                CacheEnabled = false,
-                                MinifyOutput = false,
-                                Web = false
-                            });
-                        }
+                            CacheEnabled = false,
+                            MinifyOutput = false,
+                            Web = false,
+                        }).GetEngine();
+
+                        compressed = engine.TransformToCss(reader.ReadToEnd(), null);
+                        IEnumerable<string> l = engine.GetImports();
                     }
 
-                    string newFileName = Path.Combine(fi.DirectoryName, Path.GetFileNameWithoutExtension(fi.Name)) + ".css";
-
-                    fi.MoveTo(newFileName);
+                    string newFileName = Path.Combine(workContext.Workfile.DirectoryName, Path.GetFileNameWithoutExtension(workContext.Workfile.Name)) + ".css";
+                    workContext.Workfile.MoveTo(newFileName);
 
                     using (var writer = new StreamWriter(newFileName, false))
                     {

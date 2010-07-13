@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Punchy.Configuration;
 using System.Configuration;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 
 namespace Punchy.Tests
 {
@@ -15,11 +16,16 @@ namespace Punchy.Tests
     [TestClass]
     public class ProcessorTests
     {
-        private readonly Processor processor;
+        private Processor processor;
         private PunchyConfigurationSection config = (PunchyConfigurationSection)ConfigurationManager.GetSection("punchy");
-        private readonly string tempFolder;
+        private string tempFolder;
 
         public ProcessorTests()
+        {
+        }
+
+        [TestInitialize]
+        public void Setup()
         {
             this.processor = new Processor();
             this.tempFolder = Path.Combine(config.OutputPhysicalPath, "tmp");

@@ -10,17 +10,17 @@ namespace Punchy.Plugin.MicrosoftAjaxMinifier
 {
     public class MinifierProcessor : ITool
     {
-        public void Process(ICollection<FileInfo> workspace)
+        public void Process(ToolContext context)
         {
             var minifier = new Minifier();
 
-            foreach (FileInfo fi in workspace)
+            foreach (WorkfileContext workContext in context.Workfiles)
             {
-                string extension = Path.GetExtension(fi.Name).ToLower();
+                string extension = Path.GetExtension(workContext.Workfile.Name).ToLower();
                 if (extension == ".css" || extension == ".js")
                 {
                     string compressed = null;
-                    using (var stream = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
+                    using (var stream = new FileStream(workContext.Workfile.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
                     {
                         using (var reader = new StreamReader(stream))
                         {
@@ -36,7 +36,7 @@ namespace Punchy.Plugin.MicrosoftAjaxMinifier
                         }
                     }
 
-                    using (var writer = new StreamWriter(fi.FullName, false))
+                    using (var writer = new StreamWriter(workContext.Workfile.FullName, false))
                     {
                         writer.Write(compressed);
                     }

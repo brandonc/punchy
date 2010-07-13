@@ -18,7 +18,7 @@ namespace Punchy.Tests
         private PunchyConfigurationSection config = (PunchyConfigurationSection)ConfigurationManager.GetSection("punchy");
 
         [TestMethod]
-        public void Configuration_has_two_processors()
+        public void Configuration_has_two_toolchains()
         {
             Assert.AreEqual(2, config.Toolchains.Count);
         }

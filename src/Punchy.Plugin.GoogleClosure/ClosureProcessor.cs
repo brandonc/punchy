@@ -12,12 +12,24 @@ namespace Punchy.Plugin.GoogleClosure
     public class ClosureProcessor : ITool
     {
         private const string postFormat = "js_code={0}&compilation_level={1}&output_format={2}&output_info={3}";
+        private const long maxLength = 200000;
 
-        public void Process(ICollection<System.IO.FileInfo> workspace)
+        public void Process(ToolContext context)
         {
-            foreach (FileInfo fi in workspace)
+            long totalLength = 0;
+            foreach (WorkfileContext workContext in context.Workfiles)
+                totalLength += workContext.Workfile.Length;
+
+            if (totalLength > maxLength)
+                throw new InvalidOperationException("Google Closure plugin only supports bundles up to 200K. That's because this plugin is hacky.");
+
+            foreach (WorkfileContext workContext in context.Workfiles)
             {
-                using (var fileReader = new StreamReader(fi.FullName))
+                var request = WebRequest.Create("http://closure-compiler.appspot.com/compile");
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+
+                using (var fileReader = new StreamReader(workContext.Workfile.FullName))
                 {
                     var data = string.Format(
                         postFormat,
@@ -26,25 +38,20 @@ namespace Punchy.Plugin.GoogleClosure
                         "text",
                         "compiled_code"
                     );
-
-                    var request = WebRequest.Create("http://closure-compiler.appspot.com/compile");
-                    request.Method = "POST";
-                    request.ContentType = "application/x-www-form-urlencoded";
-
+                    
                     using (var dataStream = new StreamWriter(request.GetRequestStream()))
                     {
                         dataStream.Write(data);
                     }
+                }
 
-                    var response = request.GetResponse();
-                    using (var responseStream = response.GetResponseStream())
+                using (var responseStream = request.GetResponse().GetResponseStream())
+                {
+                    var streamReader = new StreamReader(responseStream);
+
+                    using (var writer = new StreamWriter(workContext.Workfile.FullName, false))
                     {
-                        var streamReader = new StreamReader(responseStream);
-
-                        using (var writer = new StreamWriter(fi.FullName, false))
-                        {
-                            writer.Write(streamReader.ReadToEnd());
-                        }
+                        writer.Write(streamReader.ReadToEnd());
                     }
                 }
             }
