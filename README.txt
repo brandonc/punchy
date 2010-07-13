@@ -2,7 +2,9 @@ Overview
 ========
 
 At runtime Punchy minifies and combines javascript and css files into pre-configured bundles
-for use by your web application.
+for use by your web application. Most of the time you want to perform this step during the build
+process, but occasionally it can be helpful to do it at runtime. Such as when you need to distribute
+source code without minififaction tool dependencies.
 
 Punchy is based on Pithy. Pithy does something very similar but uses a .NET port
 of YUI Compressor. Punchy allows you to change compressors and includes YUI Compressor
@@ -16,4 +18,5 @@ Re-minified files are given cache-busting querystring parameters.
 Change History
 ==============
 
+2010-7-13 broken do not use.
 2010-7-12 alpha release
