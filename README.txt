@@ -5,7 +5,9 @@ Punchy is based on Pithy. At runtime it minifies and combines javascript and css
 into pre-configured bundles. It uses a plugin system so that minification engines can
 be exchanged. Microsoft Ajax Minifier and Yahoo! YUI Compressor are included.
 
+Punchy requires that a folder within your web application be writable by the application.
+
 Change History
 ==============
 
-No releases yet. Don't try to use this software yet.
+2010-7-12 alpha release
