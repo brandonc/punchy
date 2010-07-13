@@ -24,8 +24,6 @@ Thumbs.db
 *.lib
 *.sbr
 *.sdf
-*.testsettings
-*.vsmdi
 ipch/
 obj/
 [Bb]in
