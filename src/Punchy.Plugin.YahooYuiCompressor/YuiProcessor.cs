@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Punchy.FileProcessor;
+using Punchy.Tool;
 using System.IO;
 using Yahoo.Yui.Compressor;
 
 namespace Punchy.Plugin.YahooYuiCompressor
 {
-    public class YuiProcessor : IFileProcessor
+    public class YuiProcessor : ITool
     {
         public void Process(ICollection<FileInfo> workspace)
         {
@@ -18,9 +18,9 @@ namespace Punchy.Plugin.YahooYuiCompressor
                 if (extension == ".css" || extension == ".js")
                 {
                     string compressed = null;
-                    using (FileStream stream = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
+                    using (var stream = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
                     {
-                        using (StreamReader reader = new StreamReader(stream))
+                        using (var reader = new StreamReader(stream))
                         {
                             switch (extension)
                             {
@@ -34,7 +34,7 @@ namespace Punchy.Plugin.YahooYuiCompressor
                         }
                     }
 
-                    using (StreamWriter writer = new StreamWriter(fi.FullName, false))
+                    using (var writer = new StreamWriter(fi.FullName, false))
                     {
                         writer.Write(compressed);
                     }

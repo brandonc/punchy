@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Punchy.FileProcessor;
+using Punchy.Tool;
 using Punchy.Configuration;
 using System.Configuration;
 using System.Text.RegularExpressions;
@@ -14,7 +14,7 @@ namespace Punchy
 {
     public class Processor : IDisposable
     {
-        private readonly List<IFileProcessor> processors;
+        private readonly Dictionary<string, List<ITool>> toolchains;
         private readonly Dictionary<string, IBundle> bundles;
         private readonly string outputPath;
         private readonly string tempPath;
@@ -99,6 +99,20 @@ namespace Punchy
             return new FileInfo(tempFile);
         }
 
+        private List<ITool> SelectToolchain(IBundle bundle)
+        {
+            if (this.toolchains.Count == 1 && this.toolchains.ContainsKey("*"))
+            {
+                return this.toolchains["*"];
+            }
+
+            List<ITool> result = null;
+            if (!this.toolchains.TryGetValue(bundle.MimeType, out result))
+                throw new BundleException("No toolchain found to support bundle type \"" + bundle.MimeType + "\".");
+
+            return result;
+        }
+
         private void ProcessAndSaveBundle(IBundle bundle)
         {
             // Copy each source file to temp location and ensure it exists.
@@ -113,27 +127,9 @@ namespace Punchy
             }
 
             // Run each processor
-            foreach (IFileProcessor proc in this.processors)
+            foreach (ITool proc in SelectToolchain(bundle))
             {
                 proc.Process(info);
-            }
-
-            // Combine and save into bundle file
-            string outputFile = Path.Combine(this.outputPath, bundle.Filename);
-            using (StreamWriter writer = new StreamWriter(outputFile, false, Encoding.UTF8, 1024))
-            {
-                foreach (FileInfo fi in info)
-                {
-                    using (StreamReader reader = new StreamReader(new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 1024), true))
-                    {
-                        char[] buffer = new char[1024];
-                        int numRead = 0;
-                        while ((numRead = reader.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            writer.Write(buffer, 0, numRead);
-                        }
-                    }
-                }
             }
 
             bundle.Revision = DateTime.Now.Ticks;
@@ -183,29 +179,49 @@ namespace Punchy
 
             PunchyConfigurationSection config = (PunchyConfigurationSection)ConfigurationManager.GetSection("punchy");
 
-            this.processors = new List<IFileProcessor>(config.Processors.Count);
+            // Populate toolchains
+            this.toolchains = new Dictionary<string, List<ITool>>(config.Toolchains.Count);
+            foreach (ToolchainElementCollection toolchain in config.Toolchains)
+            {
+                string key = toolchain.ForMimeType;
+                if (String.IsNullOrWhiteSpace(key))
+                {
+                    if (this.toolchains.ContainsKey("*"))
+                        throw new InvalidPunchyConfigurationException("Only one toolchain can be applied to all bundles. For all other toolchains, specify a \"formimetype\" property.");
+
+                    key = "*";
+                }
+
+                List<ITool> toolchainList = new List<ITool>(toolchain.Count);
+                foreach (ToolchainElement toolconfig in toolchain)
+                {
+                    try
+                    {
+                        ITool instance = toolconfig.Type.CreateInstanceFromTypeString<ITool>();
+
+                        if (instance == null)
+                            throw new InvalidPunchyConfigurationException("Tool \"" + toolconfig.Type + "\" is not a valid type string. Use the format \"<fullyqualifiedclassname,assembly>\"");
+
+                        toolchainList.Add(instance);
+                    }
+                    catch (InvalidCastException ex)
+                    {
+                        throw new InvalidPunchyConfigurationException("Tool \"" + toolconfig.Type + "\" must implement the Punchy.Tool.ITool interface.", ex);
+                    }
+                }
+
+                // Make sure the combiner tool is added last.
+                toolchainList.Add(new CombinerTool());
+                this.toolchains.Add(key, toolchainList);
+            }
+
             this.outputPath = config.OutputPhysicalPath;
             this.outputVirtualPath = config.OutputPath;
 
             if (!this.outputVirtualPath.EndsWith("/"))
                 this.outputVirtualPath = this.outputVirtualPath + "/";
 
-            foreach (ProviderSettings plugin in config.Processors)
-            {
-                try
-                {
-                    IFileProcessor proc = plugin.Type.CreateInstanceFromTypeString<IFileProcessor>();
-                    if(proc == null)
-                        throw new InvalidPunchyConfigurationException("Plugin type string \"" + plugin.Type + "\" was not in the correct format.");
-
-                    this.processors.Add(proc);
-                }
-                catch (InvalidCastException ex)
-                {
-                    throw new InvalidPunchyConfigurationException("Plugin type \"" + plugin.Type + "\" was not of type \"" + typeof(IFileProcessor).AssemblyQualifiedName + "\".", ex);
-                }
-            }
-
+            // Populate bundles
             this.bundles = new Dictionary<string, IBundle>(config.Bundles.Count);
             foreach (IBundle bundle in config.Bundles.Cast<IBundle>())
             {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Configuration;
-using Punchy.FileProcessor;
+using Punchy.Tool;
 
 namespace Punchy.Configuration
 {
@@ -26,7 +26,7 @@ namespace Punchy.Configuration
             }
         }
 
-        [ConfigurationProperty("bundles")]
+        [ConfigurationProperty("bundles", IsRequired = true)]
         [ConfigurationCollection(typeof(BundleElementCollection), AddItemName = "bundle", ClearItemsName = "clearbundles", RemoveItemName = "removebundle")]
         public BundleElementCollection Bundles
         {
@@ -36,13 +36,13 @@ namespace Punchy.Configuration
             }
         }
 
-        [ConfigurationProperty("processors")]
-        [ConfigurationCollection(typeof(ProviderSettingsCollection))]
-        public ProviderSettingsCollection Processors
+        [ConfigurationProperty("toolchains", IsRequired = true)]
+        [ConfigurationCollection(typeof(ToolchainElementCollection))]
+        public ToolchainElementCollection Toolchains
         {
             get
             {
-                return (ProviderSettingsCollection)this["processors"];
+                return (ToolchainElementCollection)this["toolchains"];
             }
         }
     }

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Punchy.FileProcessor;
+using Punchy.Tool;
 using System.IO;
 using dotless.Core;
 using dotless.Core.configuration;
 
 namespace Punchy.Plugin.DotLessCss
 {
-    public class LessCssProcessor : IFileProcessor
+    public class LessCssProcessor : ITool
     {
         public void Process(ICollection<FileInfo> workspace)
         {
@@ -20,9 +20,9 @@ namespace Punchy.Plugin.DotLessCss
                 if (Path.GetExtension(fi.Name).ToLower() == ".less")
                 {
                     string compressed = null;
-                    using (FileStream stream = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
+                    using (var stream = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
                     {
-                        using (StreamReader reader = new StreamReader(stream))
+                        using (var reader = new StreamReader(stream))
                         {
                             compressed = Less.Parse(reader.ReadToEnd(), new DotlessConfiguration()
                             {
@@ -37,7 +37,7 @@ namespace Punchy.Plugin.DotLessCss
 
                     fi.MoveTo(newFileName);
 
-                    using (StreamWriter writer = new StreamWriter(newFileName, false))
+                    using (var writer = new StreamWriter(newFileName, false))
                     {
                         writer.Write(compressed);
                     }

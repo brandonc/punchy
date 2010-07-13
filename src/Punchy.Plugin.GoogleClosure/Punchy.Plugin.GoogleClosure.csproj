@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}</ProjectGuid>
+    <ProjectGuid>{C1DFA42F-4F68-4D27-B64F-72D3FE7D022F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Punchy</RootNamespace>
-    <AssemblyName>Punchy</AssemblyName>
+    <RootNamespace>Punchy.Plugin.GoogleClosure</RootNamespace>
+    <AssemblyName>Punchy.Plugin.GoogleClosure</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -25,17 +25,15 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,36 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BundleException.cs" />
-    <Compile Include="Configuration\FileElement.cs" />
-    <Compile Include="Configuration\FileElementCollection.cs" />
-    <Compile Include="Configuration\BundleElement.cs" />
-    <Compile Include="Configuration\BundleElementCollection.cs" />
-    <Compile Include="Configuration\PathMapper.cs" />
-    <Compile Include="Configuration\PunchyConfigurationSection.cs" />
-    <Compile Include="Configuration\ToolchainElement.cs" />
-    <Compile Include="Configuration\ToolchainElementCollection.cs" />
-    <Compile Include="Extension\HtmlHelperExtensions.cs" />
-    <Compile Include="Extension\StringExtensions.cs" />
-    <Compile Include="Extension\UrlHelperExtensions.cs" />
-    <Compile Include="Tool\CombinerFileProcessor.cs" />
-    <Compile Include="Tool\ITool.cs" />
-    <Compile Include="IFile.cs" />
-    <Compile Include="IBundle.cs" />
-    <Compile Include="InvalidPunchyConfigurationException.cs" />
-    <Compile Include="Processor.cs" />
-    <Compile Include="ProcessorWrapper.cs" />
+    <Compile Include="ClosureProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\LICENSE.txt">
-      <Link>LICENSE.txt</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\README.txt">
-      <Link>README.txt</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\Punchy\Punchy.csproj">
+      <Project>{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}</Project>
+      <Name>Punchy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

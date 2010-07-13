@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Punchy.FileProcessor;
+using Punchy.Tool;
 using System.IO;
 using Microsoft.Ajax.Utilities;
 
 namespace Punchy.Plugin.MicrosoftAjaxMinifier
 {
-    public class MinifierProcessor : IFileProcessor
+    public class MinifierProcessor : ITool
     {
         public void Process(ICollection<FileInfo> workspace)
         {
-            Minifier minifier = new Minifier();
+            var minifier = new Minifier();
 
             foreach (FileInfo fi in workspace)
             {
@@ -20,9 +20,9 @@ namespace Punchy.Plugin.MicrosoftAjaxMinifier
                 if (extension == ".css" || extension == ".js")
                 {
                     string compressed = null;
-                    using (FileStream stream = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
+                    using (var stream = new FileStream(fi.FullName, FileMode.Open, FileAccess.Read, FileShare.None))
                     {
-                        using (StreamReader reader = new StreamReader(stream))
+                        using (var reader = new StreamReader(stream))
                         {
                             switch (extension)
                             {
@@ -36,7 +36,7 @@ namespace Punchy.Plugin.MicrosoftAjaxMinifier
                         }
                     }
 
-                    using (StreamWriter writer = new StreamWriter(fi.FullName, false))
+                    using (var writer = new StreamWriter(fi.FullName, false))
                     {
                         writer.Write(compressed);
                     }

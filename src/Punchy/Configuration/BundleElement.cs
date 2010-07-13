@@ -63,7 +63,7 @@ namespace Punchy.Configuration
                         result = "text/css";
                         break;
                     default:
-                        throw new InvalidPunchyConfigurationException("Unknown file extension \"" + Path.GetExtension(file.Path) + "\" in fileset \"" + this.OutFile + "\".");
+                        throw new InvalidPunchyConfigurationException("Unknown file extension \"" + Path.GetExtension(file.Path) + "\" in bundle \"" + this.OutFile + "\".");
                 }
             }
 
@@ -72,7 +72,7 @@ namespace Punchy.Configuration
 
         private void ThrowSetCombinationException()
         {
-            throw new InvalidPunchyConfigurationException("Fileset \"" + this.OutFile + "\" has an invalid combination of file types.");
+            throw new InvalidPunchyConfigurationException("Bundle \"" + this.OutFile + "\" has an invalid combination of file types.");
         }
 
         public ICollection<IFile> FileList

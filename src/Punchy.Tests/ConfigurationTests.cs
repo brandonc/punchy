@@ -20,7 +20,7 @@ namespace Punchy.Tests
         [TestMethod]
         public void Configuration_has_two_processors()
         {
-            Assert.AreEqual(2, config.Processors.Count);
+            Assert.AreEqual(2, config.Toolchains.Count);
         }
 
         [TestMethod]
