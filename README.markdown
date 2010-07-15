@@ -13,6 +13,7 @@ Change History
 ==============
 
 2010-7-14 beta release
+
 2010-7-12 alpha release
 
 [1]: http://github.com/clearwavebuild/Pithy
