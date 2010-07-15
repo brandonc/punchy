@@ -12,8 +12,15 @@ Punchy uses file modification times to figure out if source files need to be re-
 Change History
 ==============
 
-2010-7-14 beta release
+### 2010-7-15
+ - Fixed MS Ajax Minifier issue where semicolons were ommitted from the end of files.
+ - Modified build output location, added example files to output folder
+ - Fixed support for "apply to all mimetypes" toolchain
 
-2010-7-12 alpha release
+### 2010-7-14
+beta release
+
+### 2010-7-12
+alpha release
 
 [1]: http://github.com/clearwavebuild/Pithy

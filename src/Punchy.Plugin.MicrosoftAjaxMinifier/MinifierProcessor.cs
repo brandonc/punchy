@@ -30,10 +30,21 @@ namespace Punchy.Plugin.MicrosoftAjaxMinifier
                                     compressed = minifier.MinifyStyleSheet(reader.ReadToEnd());
                                     break;
                                 case ".js":
-                                    compressed = minifier.MinifyJavaScript(reader.ReadToEnd(), new CodeSettings()
+                                    StringBuilder sb = new StringBuilder(minifier.MinifyJavaScript(reader.ReadToEnd(), new CodeSettings()
                                     {
-                                        MacSafariQuirks = true
-                                    });
+                                        CollapseToLiteral = true,
+                                        LocalRenaming = LocalRenaming.CrunchAll,
+                                        MacSafariQuirks = true,
+                                        RemoveFunctionExpressionNames = true,
+                                        RemoveUnneededCode = true,
+                                        InlineSafeStrings = true,
+                                        StripDebugStatements = true,
+                                        IndentSize = 4,
+                                        CombineDuplicateLiterals = true,
+                                        PreserveFunctionNames = true
+                                    })).Append(";");
+
+                                    compressed = sb.ToString();
                                     break;
                             }
                         }

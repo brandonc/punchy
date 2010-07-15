@@ -45,3 +45,7 @@ _ReSharper*/
 
 # Project specific
 src/ExampleWebApp/Content/cache
+output/*.dll
+output/*.pdb
+output/README.*
+output/LICENSE.*

@@ -21,8 +21,10 @@ namespace Punchy
         private readonly string outputVirtualPath;
         
         private static int instanceNumber = 0;
+        private const int INTERVAL_REVISION_CHECK_SECONDS = 5;
 
         private bool finalized = false;
+        private DateTime lastRevisionCheck = DateTime.MinValue;
 
         public string GetResourceFor(string bundlefilename)
         {
@@ -33,8 +35,9 @@ namespace Punchy
             if(!this.bundles.TryGetValue(bundlefilename, out bundle))
                 throw BundleException.FromFilename(bundlefilename);
 
-            if (CacheRevisionOutdated(bundle))
+            if (lastRevisionCheck.AddSeconds(INTERVAL_REVISION_CHECK_SECONDS) < DateTime.Now && CacheRevisionOutdated(bundle))
             {
+                lastRevisionCheck = DateTime.Now;
                 ProcessAndSaveBundle(bundle);
             }
 
@@ -48,6 +51,7 @@ namespace Punchy
 
         public void Dispose()
         {
+            // Deletes temp files that were created by this instance
             if (!this.finalized)
             {
                 finalized = true;
@@ -99,14 +103,21 @@ namespace Punchy
 
         private List<ITool> SelectToolchain(IBundle bundle)
         {
-            if (this.toolchains.Count == 1 && this.toolchains.ContainsKey("*"))
+            List<ITool> combineWith = null;
+            if (this.toolchains.ContainsKey("*"))
             {
-                return this.toolchains["*"];
+                combineWith = this.toolchains["*"];
             }
 
             List<ITool> result = null;
-            if (!this.toolchains.TryGetValue(bundle.MimeType, out result))
+            if (!this.toolchains.TryGetValue(bundle.MimeType, out result) && combineWith == null)
                 throw new BundleException("No toolchain found to support bundle type \"" + bundle.MimeType + "\".");
+
+            if (result == null)
+                return combineWith;
+
+            if(combineWith != null)
+                result.AddRange(combineWith);
 
             return result;
         }
@@ -251,9 +262,7 @@ namespace Punchy
 
             TryIO(() =>
             {
-                if (!Directory.Exists(this.outputPath))
-                    Directory.CreateDirectory(this.outputPath);
-
+                // Also creates outputpath
                 if (!Directory.Exists(this.tempPath))
                     Directory.CreateDirectory(this.tempPath);
             });

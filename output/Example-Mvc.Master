@@ -1,0 +1,35 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <%=Html.PunchyBundleLinkCss("css-min.css", new { media = "screen" }) %>
+</head>
+
+<body>
+    <div class="page">
+
+        <div id="header">
+            <h1>My MVC Application</h1>
+
+            <ul id="menu">              
+                <li><%: Html.ActionLink("Home", "Index", "Home")%></li>
+                <li><%: Html.ActionLink("About", "About", "Home")%></li>
+            </ul>
+            <br class="clear" />
+        </div>
+
+        <div id="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+
+            <p id="nojq">This block was supposed to be hidden. Did script bundle execution fail!?</p>
+        </div>
+
+        <div id="footer">
+            <p>Copyright &copy;2010</p>
+        </div>
+    </div>
+    <%=Html.PunchyBundleScript("jq.js") %>
+</body>
+</html>

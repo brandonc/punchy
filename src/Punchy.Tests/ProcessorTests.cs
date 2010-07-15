@@ -61,7 +61,7 @@ namespace Punchy.Tests
 
         [TestMethod]
         [ExpectedException(typeof(BundleException))]
-        public void Invalid_css_throw_bundleexception()
+        public void Invalid_bundle_throw_bundleexception()
         {
             this.processor.GetResourceFor("a-bundle-that-doesnt-exist.js");
         }
