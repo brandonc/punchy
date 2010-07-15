@@ -42,3 +42,6 @@ _ReSharper*/
 
 # Office Temp Files
 ~$*
+
+# Project specific
+src/ExampleWebApp/Content/cache

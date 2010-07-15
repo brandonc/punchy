@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="testfiles\import.less" />
+    <None Include="testfiles\site.less" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Punchy.Plugin.DotLessCss\Punchy.Plugin.DotLessCss.csproj">
@@ -74,6 +76,12 @@
       <Project>{62AE82BD-CEF4-4A7D-B33C-7A247944A8FD}</Project>
       <Name>Punchy</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="testfiles\app.js" />
+    <Content Include="testfiles\jquery-1.4.2.js" />
+    <Content Include="testfiles\printer.css" />
+    <Content Include="testfiles\reset.css" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

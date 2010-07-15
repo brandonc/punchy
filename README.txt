@@ -18,5 +18,6 @@ Re-minified files are given cache-busting querystring parameters.
 Change History
 ==============
 
+2010-7-14 beta release
 2010-7-13 broken do not use.
 2010-7-12 alpha release

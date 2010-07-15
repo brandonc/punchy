@@ -27,8 +27,29 @@ namespace Punchy.Tests
         [TestInitialize]
         public void Setup()
         {
-            this.processor = new Processor();
             this.tempFolder = Path.Combine(config.OutputPhysicalPath, "tmp");
+            if(Directory.Exists(this.tempFolder))
+                Directory.Delete(this.tempFolder, true);
+
+            this.processor = new Processor();
+        }
+
+        [TestMethod]
+        public void Revision_between_processor_instances_are_equal()
+        {
+            File.Delete(Path.Combine(config.OutputPhysicalPath, "app-min.js"));
+            File.Delete(Path.Combine(config.OutputPhysicalPath, "css-min.css"));
+
+            var resource1 = processor.GetResourceFor("app-min.js");
+            var resource2 = processor.GetResourceFor("app-min.js");
+
+            Processor processor2 = new Processor();
+            var resource3 = processor2.GetResourceFor("app-min.js");
+
+            Assert.AreEqual(resource1, resource2);
+            Assert.AreEqual(resource1, resource3);
+
+            Console.WriteLine(resource1);
         }
 
         [TestMethod]
@@ -36,6 +57,13 @@ namespace Punchy.Tests
         {
             string file = this.processor.GetResourceFor("app-min.js");
             Assert.IsNotNull(file);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BundleException))]
+        public void Invalid_css_throw_bundleexception()
+        {
+            this.processor.GetResourceFor("a-bundle-that-doesnt-exist.js");
         }
 
         [TestMethod]

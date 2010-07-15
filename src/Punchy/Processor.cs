@@ -41,9 +41,7 @@ namespace Punchy
             string physicalPath = Path.Combine(this.outputPath, bundle.Filename);
 
             if (HttpContext.Current == null)
-            {
-                return physicalPath;
-            }
+                return outputVirtualPath + bundlefilename + "?r=" + bundle.Revision.ToString("X");
 
             return VirtualPathUtility.ToAbsolute(outputVirtualPath + bundlefilename) + "?r=" + bundle.Revision.ToString("X");
         }
@@ -129,17 +127,18 @@ namespace Punchy
                 });
             }
 
+            string outputFile = Path.Combine(this.outputPath, bundle.Filename);
             // Run each processor
             foreach (ITool proc in SelectToolchain(bundle))
             {
                 proc.Process(new ToolContext()
                 {
-                    OutputFile = new FileInfo(Path.Combine(this.outputPath, bundle.Filename)),
+                    OutputFile = new FileInfo(outputFile),
                     Workfiles = info,
                 });
             }
 
-            bundle.Revision = DateTime.Now.Ticks;
+            bundle.Revision = new FileInfo(Path.Combine(this.outputPath, bundle.Filename)).LastWriteTime.Ticks;
         }
 
         private bool CacheRevisionOutdated(IBundle bundle)

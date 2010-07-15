@@ -30,7 +30,10 @@ namespace Punchy.Plugin.MicrosoftAjaxMinifier
                                     compressed = minifier.MinifyStyleSheet(reader.ReadToEnd());
                                     break;
                                 case ".js":
-                                    compressed = minifier.MinifyJavaScript(reader.ReadToEnd());
+                                    compressed = minifier.MinifyJavaScript(reader.ReadToEnd(), new CodeSettings()
+                                    {
+                                        MacSafariQuirks = true
+                                    });
                                     break;
                             }
                         }
