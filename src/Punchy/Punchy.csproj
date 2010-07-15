@@ -79,8 +79,8 @@
       <Link>LICENSE.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\README.txt">
-      <Link>README.txt</Link>
+    <Content Include="..\..\README.markdown">
+      <Link>README.markdown</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
