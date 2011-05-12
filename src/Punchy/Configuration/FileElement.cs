@@ -33,5 +33,13 @@ namespace Punchy.Configuration
                 return this.Path;
             }
         }
+
+        public string VirtualPath
+        {
+            get
+            {
+                return this.Path;
+            }
+        }
     }
 }

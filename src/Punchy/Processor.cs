@@ -14,6 +14,7 @@ namespace Punchy
 {
     public class Processor : IDisposable
     {
+        private readonly bool debugMode;
         private readonly Dictionary<string, List<ITool>> toolchains;
         private readonly Dictionary<string, IBundle> bundles;
         private readonly string outputPath;
@@ -26,14 +27,26 @@ namespace Punchy
         private bool finalized = false;
         private DateTime lastRevisionCheck = DateTime.MinValue;
 
-        public string GetResourceFor(string bundlefilename)
+        public bool DebugMode
         {
-            if(bundlefilename == null)
+            get { return this.debugMode; }
+        }
+
+        public IBundle GetBundleFor(string bundlefilename)
+        {
+            if (bundlefilename == null)
                 throw new ArgumentNullException("bundlefilename");
 
-            IBundle bundle = null;
-            if(!this.bundles.TryGetValue(bundlefilename, out bundle))
+            IBundle result = null;
+            if (!this.bundles.TryGetValue(bundlefilename, out result))
                 throw BundleException.FromFilename(bundlefilename);
+
+            return result;
+        }
+
+        public string GetResourceFor(string bundlefilename)
+        {
+            var bundle = GetBundleFor(bundlefilename);
 
             if (lastRevisionCheck.AddSeconds(INTERVAL_REVISION_CHECK_SECONDS) < DateTime.Now && CacheRevisionOutdated(bundle))
             {
@@ -195,6 +208,8 @@ namespace Punchy
             Interlocked.Increment(ref instanceNumber);
 
             PunchyConfigurationSection config = (PunchyConfigurationSection)ConfigurationManager.GetSection("punchy");
+
+            this.debugMode = config.DebugMode;
 
             // Populate toolchains
             this.toolchains = new Dictionary<string, List<ITool>>(config.Toolchains.Count);

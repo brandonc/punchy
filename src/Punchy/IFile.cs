@@ -9,5 +9,6 @@ namespace Punchy
     {
         string Key { get; }
         string PhysicalPath { get; }
+        string VirtualPath { get; }
     }
 }

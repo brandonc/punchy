@@ -18,6 +18,15 @@ namespace Punchy.Configuration
             }
         }
 
+        [ConfigurationProperty("debugmode", DefaultValue = false, IsRequired = false)]
+        public bool DebugMode
+        {
+            get
+            {
+                return (bool)this["debugmode"];
+            }
+        }
+
         public string OutputPhysicalPath
         {
             get

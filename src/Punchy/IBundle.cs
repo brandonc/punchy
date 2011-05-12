@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Punchy
 {
-    interface IBundle
+    public interface IBundle
     {
         string Filename { get; }
         ICollection<IFile> FileList { get; }

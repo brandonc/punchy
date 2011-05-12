@@ -49,3 +49,10 @@ output/*.dll
 output/*.pdb
 output/README.*
 output/LICENSE.*
+
+output-debug/*.dll
+output-debug/*.pdb
+output-debug/README.*
+output-debug/LICENSE.*
+
+package/*.nupkg

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>punchy</id>
-    <version>1.1</version>
+    <version>1.2</version>
     <authors>Brandon Croft</authors>
     <owners>Brandon Croft</owners>
     <licenseUrl>https://github.com/brandonc/punchy/raw/master/LICENSE.txt</licenseUrl>

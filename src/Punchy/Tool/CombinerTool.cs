@@ -24,6 +24,7 @@ namespace Punchy.Tool
                             writer.Write(buffer, 0, numRead);
                         }
                     }
+                    writer.WriteLine();
                 }
             }
         }
