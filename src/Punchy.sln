@@ -17,7 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punchy.Tests", "Punchy.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{16C2C4E3-709D-4928-81D1-E9E3B0CF37BA}"
 	ProjectSection(SolutionItems) = preProject
+		..\package\install.ps1 = ..\package\install.ps1
 		Local.testsettings = Local.testsettings
+		..\package\Package.nuspec = ..\package\Package.nuspec
 		Punchy.vsmdi = Punchy.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection

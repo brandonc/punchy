@@ -11,6 +11,9 @@ Punchy uses file modification times to figure out if source files need to be re-
 
 Change History
 ==============
+### 2011-8-7
+ - Updated nuget package to reference new version of Microsoft Ajax Minifier (Olld one was no longer available)
+ - Created support FAQ on github
 
 ### 2010-7-15
  - Fixed MS Ajax Minifier issue where semicolons were ommitted from the end of files.
